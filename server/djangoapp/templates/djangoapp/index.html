@@ -16,10 +16,32 @@
     <body>
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
+            {% if user.is_authenticated %}
             <div class="navbar-header">
                 <a class="navbar-brand" href="./about">About Us</a>
                 <a class="navbar-brand" href="./contact">Contact Us</a>
             </div>
+
+            <div class="rightalign">
+                <span style="display: flex">
+                    <p style="margin-right: 16px;">{{user.username}}</p>
+                    <a href="{% url 'djangoapp:logout' %}">Logout</a>
+                </span>
+            </div>
+
+            {% else %}
+            <form action="{% url 'djangoapp:login' %}"  method="post" style="display: flex; margin-left: auto; justify-content: space-evenly; width: 35%;">
+                {% csrf_token %}
+                <div class="form-group">
+                  <input type="text" class="form-control" name="username" id="exampleInputUsername1" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" name="psw" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <a href="{% url 'djangoapp:registration' %}" class="btn btn-primary">Signup</a>
+              </form>
+              {% endif %}
         </div>
     </nav>
 
